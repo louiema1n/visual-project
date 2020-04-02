@@ -10,14 +10,14 @@
           <div :style="shotFun">
             <div class="dashboard" :style="scaleFun">
               <VueDragResize
-                :w="150"
-                :h="100"
+                :w="defaultW"
+                :h="defaultH"
                 v-on:resizing="resize"
                 v-on:dragging="resize"
                 :parentLimitation="true"
                 :parentScaleX="scale"
                 :parentScaleY="scale">
-                <el-button>默认按钮</el-button>
+                <div :style="childCss"></div>
               </VueDragResize>
             </div>
           </div>
@@ -40,6 +40,8 @@
 
 <script>
     import VueDragResize from 'vue-drag-resize';
+    import BasicLine from '@/plugins/line/BasicLine'
+
     export default {
         name: "Test",
         data() {
@@ -49,13 +51,22 @@
                 width: 0,
                 height: 0,
                 top: 0,
-                left: 0
+                left: 0,
+                defaultW: 250,
+                defaultH: 200
             }
         },
         components: {
-            VueDragResize
+            VueDragResize,
+            BasicLine
+        },
+        created() {
+
         },
         computed: {
+            childCss() {
+                return `width:${this.defaultW}px;height:${this.defaultH}px;backgroundColor:#000000`;
+            },
             scaleFun: function () {
                 let scale = this.scale;
                 return `-webkit-transform:scale(${scale});
@@ -74,6 +85,8 @@
                 this.height = newRect.height;
                 this.top = newRect.top;
                 this.left = newRect.left;
+                this.defaultW = this.width;
+                this.defaultH = this.height;
             }
         }
     }
@@ -114,7 +127,7 @@
     /*缩放效果*/
     transition: all .2s linear;
     position: absolute;
-    background-color: #1a5d8a;
+    background-color: #bfbfbf;
   }
 
   .el-header, .el-footer {

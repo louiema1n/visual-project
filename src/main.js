@@ -28,6 +28,11 @@ Vue.use(Slider);
 import VueDragResize from 'vue-drag-resize'
 Vue.component('vue-drag-resize', VueDragResize)
 
+// 引入echarts
+import ECharts from 'vue-echarts' // 在 webpack 环境下指向 components/ECharts.vue
+// 注册组件后即可使用
+Vue.component('v-chart', ECharts)
+
 // 引入自定义css
 // import '@/common/styles/index.scss' // 自定义 css
 
