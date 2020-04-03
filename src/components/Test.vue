@@ -3,27 +3,32 @@
     <el-header @mousedown.native.stop>Header</el-header>
     <el-container>
       <el-aside width="200px" @mousedown.native.stop>
-          Aside
+        <!-- 左边操作栏 -->
+        <LeftAside></LeftAside>
       </el-aside>
       <el-container>
         <el-main>
           <div :style="shotFun">
             <div class="dashboard" :style="scaleFun">
               <VueDragResize
-                :w="defaultW"
-                :h="defaultH"
+                :w="width"
+                :h="height"
                 v-on:resizing="resize"
+                @resizestop="resizeStopHandle"
                 v-on:dragging="resize"
                 :parentLimitation="true"
                 :parentScaleX="scale"
                 :parentScaleY="scale">
-                <div :style="childCss"></div>
+                <BasicLine :child-csss="childCsss" ref="dist"></BasicLine>
               </VueDragResize>
             </div>
           </div>
         </el-main>
       </el-container>
-      <el-aside width="300px" @mousedown.native.stop>Aside2</el-aside>
+      <el-aside width="300px" @mousedown.native.stop>
+        <!-- 右边操作栏 -->
+        <RightAside></RightAside>
+      </el-aside>
     </el-container>
     <el-footer height="38px" @mousedown.native.stop>
       <el-slider
@@ -41,6 +46,8 @@
 <script>
     import VueDragResize from 'vue-drag-resize';
     import BasicLine from '@/plugins/line/BasicLine'
+    import LeftAside from '@/components/leftAside/LeftAside'
+    import RightAside from '@/components/rightAside/RightAside'
 
     export default {
         name: "Test",
@@ -48,24 +55,31 @@
             return {
                 msg: 'Welcome to Your Vue.js App',
                 scale: 0.6,
-                width: 0,
-                height: 0,
+                width: 450,
+                height: 400,
                 top: 0,
                 left: 0,
-                defaultW: 250,
-                defaultH: 200
+                childCsss: {}
             }
         },
         components: {
             VueDragResize,
-            BasicLine
+            BasicLine,
+            LeftAside,
+            RightAside,
         },
         created() {
+            this.childCsss = {
+                width: this.width,
+                height: this.height,
+            }
+        },
+        mounted() {
 
         },
         computed: {
             childCss() {
-                return `width:${this.defaultW}px;height:${this.defaultH}px;backgroundColor:#000000`;
+                return `width:${this.defaultW}px;height:${this.defaultH}px;`;
             },
             scaleFun: function () {
                 let scale = this.scale;
@@ -85,8 +99,13 @@
                 this.height = newRect.height;
                 this.top = newRect.top;
                 this.left = newRect.left;
-                this.defaultW = this.width;
-                this.defaultH = this.height;
+                this.childCsss = {
+                    width: this.width,
+                    height: this.height,
+                }
+            },
+            resizeStopHandle(newRect) {
+                this.$refs.dist.resizeHandle()
             }
         }
     }
@@ -94,28 +113,26 @@
 
 <style scoped>
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-  ::-webkit-scrollbar
-  {
+  ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
     background-color: #ffffff;
   }
 
   /*定义滚动条轨道 内阴影+圆角*/
-  ::-webkit-scrollbar-track
-  {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     background-color: #F5F5F5;
   }
 
   /*定义滑块 内阴影+圆角*/
-  ::-webkit-scrollbar-thumb
-  {
+  ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #b0b8c2;
   }
+
   .dashboard {
     width: 1920px;
     height: 1080px;
@@ -141,7 +158,6 @@
     background-color: #D3DCE6;
     color: #333;
     text-align: center;
-    line-height: 200px;
   }
 
   .el-main {

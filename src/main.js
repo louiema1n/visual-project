@@ -13,6 +13,21 @@ import {
   Header,
   Footer,
   Aside,
+  Collapse,
+  CollapseItem,
+  Card,
+  Row,
+  Col,
+  Tabs,
+  TabPane,
+  Form,
+  FormItem,
+  Input,
+  InputNumber,
+  Switch,
+  Radio,
+  Option,
+  OptionGroup,
   Main
 } from 'element-ui';
 Vue.use(Button);
@@ -22,6 +37,21 @@ Vue.use(Main);
 Vue.use(Header);
 Vue.use(Footer);
 Vue.use(Aside);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
+Vue.use(Card);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(InputNumber);
+Vue.use(Switch);
+Vue.use(Radio);
+Vue.use(Option);
+Vue.use(OptionGroup);
 Vue.use(Slider);
 
 // 引入vue-drag-resize

@@ -1,19 +1,29 @@
 <template>
-  <v-chart :options="options"/>
+  <v-chart ref="chart" :options="options" :autoresize="false"/>
 </template>
 
 <script>
     import ECharts from 'vue-echarts'
-    // 引入折线图
-    import 'echarts/lib/chart/line'
+
     export default {
         name: "BasicLine",
         comments: {
             'v-chart': ECharts
         },
+        props: {
+            childCsss: Object
+        },
+        created() {
+        },
+        mounted() {
+            this.resizeHandle()
+        },
         data() {
             return {
                 options: {
+                    legend: {
+
+                    },
                     tooltip: {},
                     xAxis: {
                         type: 'category',
@@ -27,6 +37,14 @@
                         type: 'line'
                     }]
                 }
+            }
+        },
+        methods: {
+            resizeHandle() {
+                this.$refs.chart.resize({
+                    width: this.childCsss.width,
+                    height: this.childCsss.height
+                })
             }
         }
     }
