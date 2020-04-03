@@ -28,7 +28,8 @@ import {
   Radio,
   Option,
   OptionGroup,
-  Main
+  Avatar,
+  Main,
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Select);
@@ -52,6 +53,7 @@ Vue.use(Switch);
 Vue.use(Radio);
 Vue.use(Option);
 Vue.use(OptionGroup);
+Vue.use(Avatar);
 Vue.use(Slider);
 
 // 引入vue-drag-resize

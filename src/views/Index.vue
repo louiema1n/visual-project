@@ -1,6 +1,8 @@
 <template>
   <el-container>
-    <el-header @mousedown.native.stop>Header</el-header>
+    <el-header @mousedown.native.stop height="50px">
+      <ToolBar></ToolBar>
+    </el-header>
     <el-container>
       <el-aside width="200px" @mousedown.native.stop>
         <!-- 左边操作栏 -->
@@ -48,6 +50,7 @@
     import BasicLine from '@/plugins/line/BasicLine'
     import LeftAside from '@/components/leftAside/LeftAside'
     import RightAside from '@/components/rightAside/RightAside'
+    import ToolBar from '@/components/header/ToolBar'
 
     export default {
         name: "Test",
@@ -67,6 +70,7 @@
             BasicLine,
             LeftAside,
             RightAside,
+            ToolBar,
         },
         created() {
             this.childCsss = {
@@ -151,7 +155,7 @@
     background-color: #B3C0D1;
     color: #333;
     text-align: center;
-    line-height: 60px;
+    line-height: 50px;
   }
 
   .el-aside {

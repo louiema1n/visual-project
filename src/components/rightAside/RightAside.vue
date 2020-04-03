@@ -1,6 +1,6 @@
 <template>
     <el-container>
-      <el-header height="20px">
+      <el-header height="30px">
         <span>配置</span>
       </el-header>
       <el-main>
@@ -44,6 +44,6 @@
     background-color: #fff;
   }
 .el-header {
-  line-height: 20px;
+  line-height: 30px;
 }
 </style>
