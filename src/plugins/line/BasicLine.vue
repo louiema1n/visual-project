@@ -1,5 +1,5 @@
 <template>
-  <v-chart ref="chart" :options="options" :autoresize="false"/>
+  <v-chart ref="dist" :options="options" :autoresize="false"/>
 </template>
 
 <script>

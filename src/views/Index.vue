@@ -13,15 +13,19 @@
           <div :style="shotFun">
             <div class="dashboard" :style="scaleFun">
               <VueDragResize
-                :w="width"
-                :h="height"
-                v-on:resizing="resize"
-                @resizestop="resizeStopHandle"
-                v-on:dragging="resize"
+                :w="comp.style.width"
+                :h="comp.style.height"
+                :isActive="comp.style.active"
+                v-on:resizing="changeSize($event, index)"
+                @resizestop="resizeStopHandle($event, index)"
+                v-on:dragging="changeSize($event, index)"
+                v-on:activated="activeFn(index)"
+                v-on:deactivated="deActiveFn(index)"
                 :parentLimitation="true"
                 :parentScaleX="scale"
-                :parentScaleY="scale">
-                <BasicLine :child-csss="childCsss" ref="dist"></BasicLine>
+                :parentScaleY="scale"
+                v-for="(comp, index) in compList" :key="index">
+                <v-chart :ref="index" :options="comp.options" :autoresize="true" />
               </VueDragResize>
             </div>
           </div>
@@ -29,7 +33,7 @@
       </el-container>
       <el-aside width="300px" @mousedown.native.stop>
         <!-- 右边操作栏 -->
-        <RightAside></RightAside>
+        <RightAside :data="activeElementData"></RightAside>
       </el-aside>
     </el-container>
     <el-footer height="38px" @mousedown.native.stop>
@@ -51,6 +55,7 @@
     import LeftAside from '@/components/leftAside/LeftAside'
     import RightAside from '@/components/rightAside/RightAside'
     import ToolBar from '@/components/header/ToolBar'
+    import {mapState} from 'vuex'
 
     export default {
         name: "Test",
@@ -58,8 +63,6 @@
             return {
                 msg: 'Welcome to Your Vue.js App',
                 scale: 0.6,
-                width: 450,
-                height: 400,
                 top: 0,
                 left: 0,
                 childCsss: {}
@@ -82,8 +85,11 @@
 
         },
         computed: {
-            childCss() {
-                return `width:${this.defaultW}px;height:${this.defaultH}px;`;
+            ...mapState({
+                activeElementData: state => state.boardData.activeElementData
+            }),
+            compList() {
+                return this.$store.state.boardData.compList
             },
             scaleFun: function () {
                 let scale = this.scale;
@@ -98,18 +104,23 @@
             }
         },
         methods: {
-            resize(newRect) {
-                this.width = newRect.width;
-                this.height = newRect.height;
-                this.top = newRect.top;
-                this.left = newRect.left;
-                this.childCsss = {
-                    width: this.width,
-                    height: this.height,
-                }
+            changeSize(newRect, index) {
+                this.$store.dispatch('setTopAction', {id: index, top: newRect.top});
+                this.$store.dispatch('setLeftAction', {id: index, left: newRect.left});
+                this.$store.dispatch('setWidthAction', {id: index, width: newRect.width});
+                this.$store.dispatch('setHeightAction', {id: index, height: newRect.height});
             },
-            resizeStopHandle(newRect) {
-                this.$refs.dist.resizeHandle()
+            resizeStopHandle(newRect, index) {
+                this.$refs[index][0].resize({
+                    width: newRect.width,
+                    height: newRect.height
+                })
+            },
+            activeFn(index) {
+                this.$store.dispatch("setActiveAction", {id: index})
+            },
+            deActiveFn(index) {
+                this.$store.dispatch("unsetActiveAction", {id: index})
             }
         }
     }

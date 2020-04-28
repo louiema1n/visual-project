@@ -1,36 +1,46 @@
 <template>
-    <el-container>
-      <el-header height="30px">
-        <span>组件</span>
-      </el-header>
-      <el-main>
-        <el-collapse v-model="activeNames" @change="handleChange">
-          <el-collapse-item title="折线图" name="1">
-            <LeftAsideItem></LeftAsideItem>
+  <el-container>
+    <el-header height="30px">
+      <span>组件</span>
+    </el-header>
+    <el-main>
+      <el-collapse v-model="activeNames">
+        <div v-for="(item, index) in comps" :key="index">
+          <el-collapse-item :title="item.title" :name="item.name">
+            <el-row>
+              <el-col>
+                <el-card shadow="hover" :body-style="{ padding: '0px' }" v-for="(ele, c) in item.components" :key="c" @click.native="clickFn(ele)">
+                  <div class="card-img">
+                    <img :src="ele.icon"
+                         class="image">
+                    <span>{{ele.title}}</span>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
           </el-collapse-item>
-          <el-collapse-item title="饼状图" name="2">
-            <LeftAsideItem></LeftAsideItem>
-          </el-collapse-item>
-        </el-collapse>
-      </el-main>
-    </el-container>
+        </div>
+      </el-collapse>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
-    import LeftAsideItem from '@/components/leftAside/LeftAsideItem'
+    import comps from '../../data/comps'
+
     export default {
         name: "LeftAside",
         components: {
-            LeftAsideItem
         },
         data() {
             return {
-                activeNames: ['1']
+                activeNames: ['1'],
+                comps: comps
             };
         },
         methods: {
-            handleChange(val) {
-                console.log(val);
+            clickFn(ele) {
+                this.$store.dispatch("addElementAction", ele);
             }
         }
     }
@@ -40,14 +50,32 @@
   .el-collapse-item__content {
     margin-bottom: 0;
   }
+
   .el-collapse-item__header {
     background: transparent;
   }
-  .el-main{
+
+  .el-main {
     padding: 5px;
     background-color: #fff;
   }
-.el-header {
-  line-height: 30px;
-}
+
+  .el-header {
+    line-height: 30px;
+  }
+
+  .card-img {
+    text-align: left;
+  }
+
+  .card-img img {
+    width: 30%;
+    height: 30%;
+    vertical-align: middle;
+  }
+
+  .el-card {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
 </style>

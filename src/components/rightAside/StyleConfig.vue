@@ -5,11 +5,12 @@
         <el-form-item label="大小">
           <el-row>
             <el-col :span="11">
-              <el-input v-model="formInline.user" placeholder="宽度"></el-input>
+              <el-input v-model="data.width" placeholder="宽度"></el-input>
             </el-col>
             <el-col :span="2">&nbsp;</el-col>
             <el-col :span="11">
               <el-input-number v-model="num" controls-position="right" style="width: 100%" :min="1" :max="10"
+                               @change="tst"
                                placeholder="宽度"></el-input-number>
             </el-col>
           </el-row>
@@ -70,6 +71,9 @@
 <script>
     export default {
         name: "StyleConfig",
+        props: {
+          data: {}
+        },
         data() {
             return {
                 activeName: '1',
@@ -79,6 +83,11 @@
                     region: ''
                 }
             };
+        },
+        methods: {
+            tst() {
+                console.log(this.data)
+            }
         }
     }
 </script>
