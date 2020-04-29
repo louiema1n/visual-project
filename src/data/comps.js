@@ -6,7 +6,7 @@ export default [{
     title: '基本折线图',
     icon: 'https://www.echartsjs.com/examples/data/thumb/line-simple.jpg',
     style: {
-      width: 400,
+      width: 500,
       height: 400,
       top: 0,
       left: 0,
@@ -41,7 +41,7 @@ export default [{
     title: '基本区域图',
     icon: 'https://www.echartsjs.com/examples/data/thumb/area-basic.jpg',
     style: {
-      width: 400,
+      width: 500,
       height: 400,
       top: 0,
       left: 0,
@@ -82,7 +82,7 @@ export default [{
     title: '环状图',
     icon: 'https://www.echartsjs.com/examples/data/thumb/pie-doughnut.jpg',
     style: {
-      width: 400,
+      width: 500,
       height: 400,
       top: 0,
       left: 0,

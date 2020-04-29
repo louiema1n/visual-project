@@ -6,7 +6,8 @@
     <el-main>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane name="first"><span slot="label"><i class="el-icon-date"></i> 样式</span>
-          <StyleConfig :data="data.style"></StyleConfig>
+          <StyleConfig :data="data.style" v-if="typeof activeElementId !== 'undefined'"></StyleConfig>
+          <BoardConfig v-else></BoardConfig>
         </el-tab-pane>
         <el-tab-pane name="second"><span slot="label"><i class="el-icon-date"></i> 数据</span>数据</el-tab-pane>
         <el-tab-pane name="third"><span slot="label"><i class="el-icon-date"></i> 事件</span>事件</el-tab-pane>
@@ -17,11 +18,14 @@
 
 <script>
     import StyleConfig from "./StyleConfig";
+    import BoardConfig from "./BoardConfig";
+    import {mapState} from "vuex";
 
     export default {
         name: "RightAside",
         components: {
-            StyleConfig
+            StyleConfig,
+            BoardConfig,
         },
         data() {
             return {
@@ -33,12 +37,16 @@
 
           }
         },
+        computed: {
+            ...mapState({
+                activeElementId: state => state.boardData.activeElementId
+            }),
+        },
         mounted() {
         },
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
-                console.log(this.data);
             }
         }
     }

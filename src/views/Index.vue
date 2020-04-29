@@ -15,16 +15,16 @@
               <VueDragResize
                 :w="comp.style.width"
                 :h="comp.style.height"
-                :isActive="comp.style.active"
+                :isActive="comp.id === activeElementId"
                 v-on:resizing="changeSize($event, index)"
                 @resizestop="resizeStopHandle($event, index)"
                 v-on:dragging="changeSize($event, index)"
-                v-on:activated="activeFn(index)"
-                v-on:deactivated="deActiveFn(index)"
+                v-on:activated="activeFn(comp.id)"
+                v-on:deactivated="deActiveFn(comp.id)"
                 :parentLimitation="true"
                 :parentScaleX="scale"
                 :parentScaleY="scale"
-                v-for="(comp, index) in compList" :key="index">
+                v-for="(comp, index) in compList" :key="comp.id">
                 <v-chart :ref="index" :options="comp.options" :autoresize="true" />
               </VueDragResize>
             </div>
@@ -86,16 +86,21 @@
         },
         computed: {
             ...mapState({
-                activeElementData: state => state.boardData.activeElementData
+                activeElementData: state => state.boardData.activeElementData,
+                activeElementId: state => state.boardData.activeElementId,
+                boardConfigs: state => state.boardData.boardConfigs,
             }),
             compList() {
                 return this.$store.state.boardData.compList
             },
             scaleFun: function () {
-                let scale = this.scale;
+                let scale = this.scale, boardConfigs = this.boardConfigs;
                 return `-webkit-transform:scale(${scale});
                 -moz-transform:scale(${scale});
-               -o-transform:scale(${scale});`
+               -o-transform:scale(${scale});
+               background-color:${boardConfigs.backgroundColor};
+               width:${boardConfigs.width}px;
+               height:${boardConfigs.height}px;`
             },
             shotFun() {
                 let scale = this.scale, width = scale * 1992 + 'px', height = scale * 1152 + 'px';
@@ -116,17 +121,21 @@
                     height: newRect.height
                 })
             },
-            activeFn(index) {
-                this.$store.dispatch("setActiveAction", {id: index})
+            activeFn(id) {
+                this.$store.dispatch("setActiveAction", {id: id})
             },
-            deActiveFn(index) {
-                this.$store.dispatch("unsetActiveAction", {id: index})
+            deActiveFn(id) {
+                this.$store.dispatch("unsetActiveAction", {id: id})
             }
         }
     }
 </script>
 
 <style scoped>
+  .echarts {
+    width: 100%;
+    height: 100%;
+  }
   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
   ::-webkit-scrollbar {
     width: 10px;
@@ -149,8 +158,6 @@
   }
 
   .dashboard {
-    width: 1920px;
-    height: 1080px;
     left: 36px;
     top: 36px;
     box-shadow: 0 0 30px 0 rgba(0, 0, 0, .5);
@@ -159,7 +166,6 @@
     /*缩放效果*/
     transition: all .2s linear;
     position: absolute;
-    background-color: #bfbfbf;
   }
 
   .el-header, .el-footer {

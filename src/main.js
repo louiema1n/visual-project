@@ -31,6 +31,8 @@ import {
   OptionGroup,
   Avatar,
   Main,
+  Image,
+  ColorPicker,
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Select);
@@ -56,6 +58,8 @@ Vue.use(Option);
 Vue.use(OptionGroup);
 Vue.use(Avatar);
 Vue.use(Slider);
+Vue.use(Image);
+Vue.use(ColorPicker);
 
 // 引入vue-drag-resize
 import VueDragResize from 'vue-drag-resize'

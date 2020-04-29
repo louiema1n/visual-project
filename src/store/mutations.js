@@ -7,12 +7,14 @@ import {
   ENABLE_ACTIVE,
   DISABLE_ACTIVE,
   SET_ACTIVE_ELE_DATA,
+  SET_DIS_ALL_ACTIVE_ELE_DATA,
 } from "./mutations-type";
 
 export default {
   [ADD_ELEMENT](state, compData) {
+    state.boardData.activeElementData = compData;
+    state.boardData.activeElementId = compData.id;
     state.boardData.compList.push(compData)
-    state.boardData.activeElementData = state.boardData.compList[0];
   },
   [CHANGE_HEIGHT](state, payload) {
     state.boardData.compList[payload.id].style.height = payload.height;
@@ -36,7 +38,12 @@ export default {
   [DISABLE_ACTIVE](state, index) {
     state.boardData.compList[index].style.active = false;
   },
-  [SET_ACTIVE_ELE_DATA](state, index) {
-    state.boardData.activeElementData = state.boardData.compList[index];
+  [SET_ACTIVE_ELE_DATA](state, id) {
+    state.boardData.activeElementData = state.boardData.compList.find(v => {return v.id === id});
+    state.boardData.activeElementId = id;
+  },
+  [SET_DIS_ALL_ACTIVE_ELE_DATA](state) {
+    state.boardData.activeElementData = {};
+    state.boardData.activeElementId = undefined;
   },
 }

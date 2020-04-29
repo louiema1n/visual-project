@@ -27,6 +27,8 @@
 
 <script>
     import comps from '../../data/comps'
+    import { createUUID } from '../../utils/UUIDUtil'
+    import { deepClone } from '../../utils/CopyUtil'
 
     export default {
         name: "LeftAside",
@@ -40,7 +42,10 @@
         },
         methods: {
             clickFn(ele) {
-                this.$store.dispatch("addElementAction", ele);
+                // 必须进行深拷贝，否则引用类型会有问题
+                let data = deepClone(ele);
+                data.id = createUUID();
+                this.$store.dispatch("addElementAction", data);
             }
         }
     }
