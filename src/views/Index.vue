@@ -15,17 +15,19 @@
               <VueDragResize
                 :w="comp.style.width"
                 :h="comp.style.height"
+                :x="comp.style.left"
+                :y="comp.style.top"
                 :isActive="comp.id === activeElementId"
-                v-on:resizing="changeSize($event, index)"
-                @resizestop="resizeStopHandle($event, index)"
-                v-on:dragging="changeSize($event, index)"
+                v-on:resizing="changeSize($event, comp.id)"
+                @resizestop="resizeStopHandle($event, comp.id)"
+                v-on:dragging="changeSize($event, comp.id)"
                 v-on:activated="activeFn(comp.id)"
                 v-on:deactivated="deActiveFn(comp.id)"
                 :parentLimitation="true"
                 :parentScaleX="scale"
                 :parentScaleY="scale"
                 v-for="(comp, index) in compList" :key="comp.id">
-                <v-chart :ref="index" :options="comp.options" :autoresize="true" />
+                <v-chart :ref="comp.id" :options="comp.options" :autoresize="true" />
               </VueDragResize>
             </div>
           </div>
@@ -109,11 +111,11 @@
             }
         },
         methods: {
-            changeSize(newRect, index) {
-                this.$store.dispatch('setTopAction', {id: index, top: newRect.top});
-                this.$store.dispatch('setLeftAction', {id: index, left: newRect.left});
-                this.$store.dispatch('setWidthAction', {id: index, width: newRect.width});
-                this.$store.dispatch('setHeightAction', {id: index, height: newRect.height});
+            changeSize(newRect, id) {
+                this.$store.dispatch('setTopAction', {id: id, top: newRect.top});
+                this.$store.dispatch('setLeftAction', {id: id, left: newRect.left});
+                this.$store.dispatch('setWidthAction', {id: id, width: newRect.width});
+                this.$store.dispatch('setHeightAction', {id: id, height: newRect.height});
             },
             resizeStopHandle(newRect, index) {
                 this.$refs[index][0].resize({

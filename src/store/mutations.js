@@ -17,18 +17,30 @@ export default {
     state.boardData.compList.push(compData)
   },
   [CHANGE_HEIGHT](state, payload) {
-    state.boardData.compList[payload.id].style.height = payload.height;
+    state.boardData.compList.find(v => {
+      return v.id === payload.id
+    }).style.height = payload.height;
+    // state.boardData.compList[payload.id].style.height = payload.height;
   },
   [CHANGE_WIDTH](state, payload) {
-    state.boardData.compList[payload.id].style.width = payload.width;
+    state.boardData.compList.find(v => {
+      return v.id === payload.id
+    }).style.width = payload.width;
+    // state.boardData.compList[payload.id].style.width = payload.width;
   },
 
   [CHANGE_TOP](state, payload) {
-    state.boardData.compList[payload.id].style.top = payload.top;
+    state.boardData.compList.find(v => {
+      return v.id === payload.id
+    }).style.top = payload.top;
+    // state.boardData.compList[payload.id].style.top = payload.top;
   },
 
   [CHANGE_LEFT](state, payload) {
-    state.boardData.compList[payload.id].style.left = payload.left;
+    state.boardData.compList.find(v => {
+      return v.id === payload.id
+    }).style.left = payload.left;
+    // state.boardData.compList[payload.id].style.left = payload.left;
   },
 
   [ENABLE_ACTIVE](state, index) {

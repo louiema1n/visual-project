@@ -10,7 +10,7 @@ export default {
     // 画板基本属性
     boardConfigs: {
       name: '测试场景',
-      coverImg: '',
+      coverImg: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
       width: '1920',
       height: '1080',
       backgroundColor: 'rgba(166, 166, 166, 1)',

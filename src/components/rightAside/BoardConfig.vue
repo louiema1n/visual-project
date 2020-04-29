@@ -20,14 +20,21 @@
       </el-row>
     </el-form-item>
     <el-form-item label="背景">
-      <el-color-picker
-        v-model="boardConfigs.backgroundColor"
-        show-alpha
-        :predefine="predefineColors">
-      </el-color-picker>
+      <el-row>
+        <el-col :span="20">
+          <el-input v-model="boardConfigs.backgroundColor"></el-input>
+        </el-col>
+        <el-col :span="4">
+          <el-color-picker
+            v-model="boardConfigs.backgroundColor"
+            show-alpha
+            :predefine="predefineColors">
+          </el-color-picker>
+        </el-col>
+      </el-row>
     </el-form-item>
     <el-form-item label="封面">
-      <el-image :src="src">
+      <el-image :src="boardConfigs.coverImg">
         <div slot="placeholder" class="image-slot">
           加载中<span class="dot">...</span>
         </div>
@@ -67,7 +74,6 @@
                     'hsla(209, 100%, 56%, 0.73)',
                     '#c7158577'
                 ],
-                src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'
             };
         },
         computed: {
@@ -84,7 +90,5 @@
 </script>
 
 <style scoped>
-  .el-color-picker {
-    float: left;
-  }
+
 </style>
