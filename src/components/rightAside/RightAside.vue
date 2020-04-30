@@ -6,7 +6,10 @@
     <el-main>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane name="first"><span slot="label"><i class="el-icon-date"></i> 样式</span>
-          <StyleConfig :data="data.style" v-if="typeof activeElementId !== 'undefined'"></StyleConfig>
+          <StyleConfig
+            :styles="data.style"
+            :options="data.options"
+            v-if="typeof activeElementId !== 'undefined'"></StyleConfig>
           <BoardConfig v-else></BoardConfig>
         </el-tab-pane>
         <el-tab-pane name="second"><span slot="label"><i class="el-icon-date"></i> 数据</span>数据</el-tab-pane>

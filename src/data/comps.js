@@ -20,8 +20,19 @@ export default [{
       active: true
     },
     options: {
+      title: {
+        show: true,
+        text: '测试标题',
+        textStyle: {
+          color: '#000000',
+          fontStyle: '',
+          fontWeight: '',
+          fontSize: '20',
+        },
+        left: 'auto'
+      },
       legend: {
-
+        show: true,
       },
       tooltip: {},
       xAxis: {
@@ -31,10 +42,21 @@ export default [{
       yAxis: {
         type: 'value'
       },
-      series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line'
-      }]
+      series: [
+        {
+          name: '邮件营销',
+          type: 'line',
+          stack: '总量',
+          data: [120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+          name: '联盟广告',
+          type: 'line',
+          stack: '总量',
+          data: [220, 182, 191, 234, 290, 330, 310]
+        }
+      ],
+      backgroundColor: ''
     }
   }, {
     cpName: 'basic-area',
