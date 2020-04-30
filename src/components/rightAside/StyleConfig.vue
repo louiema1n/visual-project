@@ -43,7 +43,7 @@
             </el-col>
             <el-col :span="4">
               <el-color-picker
-                @mousedown.stop
+                @mousedown.native="stopMouseDown"
                 v-model="color"
                 show-alpha
                 :predefine="predefineColors">
@@ -105,6 +105,12 @@
                 console.log(this.$store.state.boardData)
                 this.$store.dispatch('setTopAction', {id: this.activeElementId, top: this.data.top});
                 this.$store.dispatch('setLeftAction', {id: this.activeElementId, left: this.data.left});
+            },
+            stopMouseDown() {
+                // 阻止事件冒泡-选择颜色时会使选择的元素失去焦点
+                document.querySelector('.el-color-picker__panel').addEventListener("mousedown", function (e) {
+                    e.stopPropagation();
+                })
             }
         }
     }
